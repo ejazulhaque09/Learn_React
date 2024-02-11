@@ -1,25 +1,15 @@
-import logo from './logo.svg';
+import Video from './components/Video'
 import './App.css';
-
-function App() {
+function App() {   // props are nothing but arguments passed in the function
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div>Videos</div>
+      <Video title="React JS Tutorial" views = "1M" time = "1 year ago" channel = "LearnWhatMatters"/>
+      <Video title="Node JS Tutorial" views = "10M" time = "1 month ago" channel = "LearnWhatMatters"/>
+      <Video title="Mongo DB Tutorial" views = "1.5M" time = "6 month ago" channel = "LearnWhatMatters"/>
     </div>
-  );
+  );  
 }
 
 export default App;
+

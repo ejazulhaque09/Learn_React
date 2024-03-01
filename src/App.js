@@ -2,28 +2,26 @@ import "./App.css";
 import Video from "./components/Video";
 import videoDB from "./data/data";
 import PlayButton from "./components/PLayButton";
-import Counter from "./components/Counter"
 import { useState } from "react";
+import AddVideo from "./components/AddVideo";
 
 function App() {
   // props are nothing but arguments passed in the function
   // in js function can also be a variable name
   // function can be passed as props
-
   const[videos,setVideos] = useState(videoDB)
+
+  function addVideos(video){
+    setVideos([
+        ...videos,
+        {...video, key: videos.length+1}
+      ]);
+  }
+
+
   return (
-    <div className="App" onClick={()=>console.log("App")}>
-      <div>
-        <button onClick={()=>{ 
-          setVideos([...videos,{key:videos.length+1, 
-            title: "Demo DB Tutorial",
-            views: "1M", 
-            time: "2 year ago",
-            channel: "LearnWhatMatters",
-            verified: true,
-          }]);
-        }}>Add Video</button>
-      </div>
+    <div className="App" onClick={()=>console.log("App pe click hua hai")}>
+      <AddVideo addVideos={addVideos}></AddVideo>
       {videos.map((video) => (
         <Video
           key={video.key}
@@ -43,16 +41,7 @@ function App() {
         </Video>
       ))}
       <div style={{ clear: "both" }}>
-        {/* <PlayButton
-          message="played"
-          onPlay={() => console.log("play")}
-          onPause={() => console.log("pause")}
-        >
-          play
-        </PlayButton> */}
-        {/* <PlayButton message="paused" onClick={()=>alert("paused")}>pause</PlayButton> */}
       </div>
-      <Counter></Counter>
     </div>
   );
 }

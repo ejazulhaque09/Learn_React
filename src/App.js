@@ -1,9 +1,8 @@
 import "./App.css";
-import Video from "./components/Video";
 import videoDB from "./data/data";
-import PlayButton from "./components/PLayButton";
 import { useState } from "react";
 import AddVideo from "./components/AddVideo";
+import VideoList from "./components/VideoList";
 
 function App() {
   // props are nothing but arguments passed in the function
@@ -20,26 +19,11 @@ function App() {
 
 
   return (
-    <div className="App" onClick={()=>console.log("App pe click hua hai")}>
+    <div className="App">
       <AddVideo addVideos={addVideos}></AddVideo>
-      {videos.map((video) => (
-        <Video
-          key={video.key}
-          title={video.title}
-          views={video.views}
-          time={video.time}
-          channel={video.channel}
-          verified={video.verified}
-        > 
-          <PlayButton
-            message="played"
-            onPlay={() => console.log("playing",video.title)}
-            onPause={() => console.log("paused",video.title)}
-          >
-            {video.title}
-          </PlayButton>
-        </Video>
-      ))}
+      <VideoList videos={videos}></VideoList>
+
+
       <div style={{ clear: "both" }}>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AddVideo.css";
 
 const initalState = {
@@ -8,12 +8,18 @@ const initalState = {
     title:'',
     views: ''
 }
-function AddVideo({addVideos}) {
+function AddVideo({addVideos,editableVideo,updateVideo}) {
   const [video, setVideo] = useState(initalState);
 
   function handleSubmit(e) {
     e.preventDefault();
-    addVideos(video);
+    if(editableVideo){
+      updateVideo(video)
+    }
+    else{
+      addVideos(video);
+    }
+    
     setVideo(initalState);
   } 
   function handleChange(e) {
@@ -23,6 +29,14 @@ function AddVideo({addVideos}) {
       [e.target.name]: e.target.value  //[] is used so that firstly inside vlaue is evaluated then works as a key
     })
   }
+
+  useEffect(()=>{
+    if(editableVideo){
+      setVideo(editableVideo)
+    }
+  },[editableVideo])
+
+
   return ( 
     <>
       <form>
@@ -45,7 +59,7 @@ function AddVideo({addVideos}) {
           onClick={handleSubmit}
 
         >
-          Add Video
+          {editableVideo?'Edit':'Add'} Video
         </button>
       </form>
     </>

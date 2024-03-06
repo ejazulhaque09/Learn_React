@@ -3,15 +3,20 @@ function Video({
   title,
   views,
   time,
-  channel = "coder Dost",
+  channel = "LearnWhatMatters",
   verified,
   children,
+  id,
+  deleteVideo,
+  editVideo,
 }) {
   return (
     <>
       <div className="container">
+        <button className = "close"onClick={()=>deleteVideo(id)}>X</button>
+        <button className = "edit"onClick={()=>editVideo(id)}>Edit</button>
         <div className="pic">
-          <img src="https://placekitten.com/640/360" alt="/" />
+          <img src={`https://picsum.photos/id/${id}/160/90`} alt="GoToChannel" />
         </div>
         <div className="title">{title}</div>
         {/* <div className="channel">{channel} {verified ?'✅': null}</div> */}

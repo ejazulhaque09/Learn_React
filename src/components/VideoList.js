@@ -14,7 +14,7 @@ function VideoList({videos}){
           id={video.id}
         > 
           <PlayButton
-            onPlay={() => console.log("playing",video.title)}
+            onPlay={() => console.log("playing",video.title,video.key)}
             onPause={() => console.log("paused",video.title)}
           >
             {video.title}

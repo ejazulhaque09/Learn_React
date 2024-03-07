@@ -32,7 +32,7 @@ function AddVideo({dispatch,editableVideo}) {
 
   useEffect(()=>{
     if(editableVideo){
-      dispatch({ type: "UPDATE", payload: video })
+      setVideo(editableVideo)
     }
   },[editableVideo])
 

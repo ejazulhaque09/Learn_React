@@ -1,6 +1,6 @@
 button{
-    background-color: black;
-    border: 1px solid rgb(33, 224, 208);
+    /* background: linear-gradient(0.25turn, #051f2a, #72d526, #1e140a);    border: 1px solid rgb(33, 224, 208); */
+    background: rgb(80, 79, 79);
     padding: 1em;
     border-radius: 1em;
     color: white;

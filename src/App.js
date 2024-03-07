@@ -1,6 +1,6 @@
 import "./App.css";
 import videoDB from "./data/data";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
 
@@ -8,38 +8,40 @@ function App() {
   // props are nothing but arguments passed in the function
   // in js function can also be a variable name
   // function can be passed as props
-  const[videos,setVideos] = useState(videoDB)
-  const[editableVideo,setEditableVideo] = useState(null)
 
-  function addVideos(video){
-    setVideos([
-        ...videos,
-        {...video, id: videos.length+1}
-      ]);
+  const [editableVideo, setEditableVideo] = useState(null);
+  function videoReducer(videos, action) {
+    switch (action.type) {
+      case "ADD":
+        return [...videos, { ...action.payload, id: videos.length + 1 }];
+      case "DELETE":
+        return videos.filter((video) => video.id !== action.payload);
+      case "UPDATE":
+        const index = videos.findIndex((v) => v.id === action.payload.id);
+        const newVideo = [...videos];
+        newVideo.splice(index, 1, action.payload);
+        setEditableVideo(null);
+        return newVideo;
+      default:
+        return videos;
+    }
   }
-  function deleteVideo(id){
-    setVideos(videos.filter(video=>video.id!==id))
-    console.log(id);
-  }
-  function editVideo(id){
-    setEditableVideo(videos.find(video=>video.id===id))
-  }
+  const [videos, dispatch] = useReducer(videoReducer, videoDB);
 
-  function updateVideo(video){
-    const index = videos.findIndex(v=>v.id===video.id)
-    const newVideo = [...videos]
-    newVideo.splice(index,1,video)
-    setVideos(newVideo)
+  function editVideo(id) {
+    setEditableVideo(videos.find((video) => video.id === id));
   }
 
   return (
     <div className="App">
-      <AddVideo updateVideo={updateVideo}addVideos={addVideos} editableVideo = {editableVideo}></AddVideo>
-      <VideoList deleteVideo = {deleteVideo} editVideo={editVideo} videos={videos}></VideoList>
+      <AddVideo dispatch={dispatch} editableVideo={editableVideo}></AddVideo>
+      <VideoList
+        dispatch={dispatch}
+        editVideo={editVideo}
+        videos={videos}
+      ></VideoList>
 
-
-      <div style={{ clear: "both" }}>
-      </div>
+      <div style={{ clear: "both" }}></div>
     </div>
   );
 }

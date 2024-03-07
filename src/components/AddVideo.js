@@ -8,16 +8,16 @@ const initalState = {
     title:'',
     views: ''
 }
-function AddVideo({addVideos,editableVideo,updateVideo}) {
+function AddVideo({dispatch,editableVideo}) {
   const [video, setVideo] = useState(initalState);
 
   function handleSubmit(e) {
     e.preventDefault();
     if(editableVideo){
-      updateVideo(video)
+      dispatch({ type: "UPDATE", payload: video })
     }
     else{
-      addVideos(video);
+      dispatch({ type: "ADD", payload: video });
     }
     
     setVideo(initalState);
@@ -32,7 +32,7 @@ function AddVideo({addVideos,editableVideo,updateVideo}) {
 
   useEffect(()=>{
     if(editableVideo){
-      setVideo(editableVideo)
+      dispatch({ type: "UPDATE", payload: video })
     }
   },[editableVideo])
 

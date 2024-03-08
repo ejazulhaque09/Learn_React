@@ -1,9 +1,9 @@
 import "./App.css";
 import videoDB from "./data/data";
-import { useReducer, useState } from "react";
+import {useReducer, useState } from "react";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
-
+import ThemeContext from "./components/context/ThemeContex";
 function App() {
   // props are nothing but arguments passed in the function
   // in js function can also be a variable name
@@ -27,13 +27,17 @@ function App() {
     }
   }
   const [videos, dispatch] = useReducer(videoReducer, videoDB);
+  // const themeContext = useContext(ThemeContext);
+  const[mode,SetMode] = useState('darkMode');
+
 
   function editVideo(id) {
     setEditableVideo(videos.find((video) => video.id === id));
   }
-
   return (
-    <div className="App">
+    <ThemeContext.Provider value={mode}>
+    <div className={`App ${mode}`} onClick={()=>{console.log("App")}}>
+    <button onClick={()=>SetMode(mode === 'darkMode'? 'lightMode' : 'darkMode')}>Mode</button>
       <AddVideo dispatch={dispatch} editableVideo={editableVideo}></AddVideo>
       <VideoList
         dispatch={dispatch}
@@ -43,6 +47,7 @@ function App() {
 
       <div style={{ clear: "both" }}></div>
     </div>
+    </ThemeContext.Provider>
   );
 }
 export default App;

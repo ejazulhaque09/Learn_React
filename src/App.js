@@ -1,9 +1,11 @@
 import "./App.css";
 import videoDB from "./data/data";
-import {useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import AddVideo from "./components/AddVideo";
 import VideoList from "./components/VideoList";
 import ThemeContext from "./components/context/ThemeContex";
+import VideosContext from "./components/context/VideosContext";
+import VideoDispatchContext from "./components/context/VideoDispatchContext";
 function App() {
   // props are nothing but arguments passed in the function
   // in js function can also be a variable name
@@ -28,25 +30,33 @@ function App() {
   }
   const [videos, dispatch] = useReducer(videoReducer, videoDB);
   // const themeContext = useContext(ThemeContext);
-  const[mode,SetMode] = useState('darkMode');
-
+  const [mode, SetMode] = useState("darkMode");
 
   function editVideo(id) {
     setEditableVideo(videos.find((video) => video.id === id));
   }
   return (
     <ThemeContext.Provider value={mode}>
-    <div className={`App ${mode}`} onClick={()=>{console.log("App")}}>
-    <button onClick={()=>SetMode(mode === 'darkMode'? 'lightMode' : 'darkMode')}>Mode</button>
-      <AddVideo dispatch={dispatch} editableVideo={editableVideo}></AddVideo>
-      <VideoList
-        dispatch={dispatch}
-        editVideo={editVideo}
-        videos={videos}
-      ></VideoList>
-
-      <div style={{ clear: "both" }}></div>
-    </div>
+      <VideosContext.Provider value={videos}>
+        <VideoDispatchContext.Provider value={dispatch}>
+          <div
+            className={`App ${mode}`}
+            onClick={() => {
+              console.log("App");
+            }}
+          >
+            <button
+              onClick={() =>
+                SetMode(mode === "darkMode" ? "lightMode" : "darkMode")
+              }
+            >
+              Mode
+            </button>
+            <AddVideo editableVideo={editableVideo}></AddVideo>
+            <VideoList editVideo={editVideo}></VideoList>
+          </div>
+        </VideoDispatchContext.Provider>
+      </VideosContext.Provider>
     </ThemeContext.Provider>
   );
 }

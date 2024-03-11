@@ -1,43 +1,44 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./AddVideo.css";
+import VideoDispatchContext from "./context/VideoDispatchContext";
 
 const initalState = {
-    time: "2 year ago",
-    channel: "LearnWhatMatters",
-    verified: true,
-    title:'',
-    views: ''
-}
-function AddVideo({dispatch,editableVideo}) {
+  time: "2 year ago",
+  channel: "LearnWhatMatters",
+  verified: true,
+  title: "",
+  views: "",
+};
+function AddVideo({ editableVideo }) {
   const [video, setVideo] = useState(initalState);
+  const dispatch = useContext(VideoDispatchContext);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(editableVideo){
-      dispatch({ type: "UPDATE", payload: video })
-    }
-    else{
+    if (editableVideo) {
+      dispatch({ type: "UPDATE", payload: video });
+    } else {
       dispatch({ type: "ADD", payload: video });
     }
-    
+
     setVideo(initalState);
-  } 
+  }
   function handleChange(e) {
     e.stopPropagation();
     // console.log(e.target.name, e.target.value);
-    setVideo({...video,
-      [e.target.name]: e.target.value  //[] is used so that firstly inside vlaue is evaluated then works as a key
-    })
+    setVideo({
+      ...video,
+      [e.target.name]: e.target.value, //[] is used so that firstly inside vlaue is evaluated then works as a key
+    });
   }
 
-  useEffect(()=>{
-    if(editableVideo){
-      setVideo(editableVideo)
+  useEffect(() => {
+    if (editableVideo) {
+      setVideo(editableVideo);
     }
-  },[editableVideo])
+  }, [editableVideo]);
 
-
-  return ( 
+  return (
     <>
       <form>
         <input
@@ -53,13 +54,9 @@ function AddVideo({dispatch,editableVideo}) {
           onChange={handleChange}
           placeholder="views"
           value={video.views}
-
         />
-        <button
-          onClick={handleSubmit}
-
-        >
-          {editableVideo?'Edit':'Add'} Video
+        <button onClick={handleSubmit}>
+          {editableVideo ? "Edit" : "Add"} Video
         </button>
       </form>
     </>

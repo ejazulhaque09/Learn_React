@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./Video.css";
 import ThemeContext from "./context/ThemeContex";
-import VideoDispatchContext from "./context/VideoDispatchContext";
+import useVideoDispatch from "./hooks/VideoDispatch";
 function Video({
   title,
   views,
@@ -13,7 +13,7 @@ function Video({
   editVideo,
 }) {
   const theme = useContext(ThemeContext)
-  const dispatch = useContext(VideoDispatchContext);
+  const dispatch = useVideoDispatch();
   return (
     <>
       <div className={`container ${theme}`}>

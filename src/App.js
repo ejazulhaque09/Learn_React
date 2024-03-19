@@ -6,6 +6,7 @@ import ThemeContext from "./components/context/ThemeContex";
 import VideosContext from "./components/context/VideosContext";
 import VideoDispatchContext from "./components/context/VideoDispatchContext";
 function App() {
+  console.log('render App')
   // props are nothing but arguments passed in the function
   // in js function can also be a variable name
   // function can be passed as props

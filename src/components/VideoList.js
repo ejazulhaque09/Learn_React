@@ -2,7 +2,7 @@ import Video from "./Video";
 import PlayButton from "./PLayButton";
 import useVideos from "./hooks/Videos";
 import axios from 'axios'
-import { useEffect} from "react";
+import { useCallback, useEffect} from "react";
 import useVideoDispatch from "./hooks/VideoDispatch";
 function VideoList({editVideo}) {
   const url = "https://my.api.mockaroo.com/videos.json?key=964a9680";
@@ -20,6 +20,8 @@ function VideoList({editVideo}) {
     }
     getVideos();
   },[dispatch]);
+  const play = useCallback(()=> console.log('Playing...'),[])
+  const pause = useCallback(()=> console.log('Paused...'),[])
   return (
     <>
       {videos.map((video) => (
@@ -34,8 +36,8 @@ function VideoList({editVideo}) {
           editVideo={editVideo}
         >
           <PlayButton
-            onPlay={() => console.log("playing", video.title, video.key)}
-            onPause={() => console.log("paused", video.title)}
+            onPlay={play}
+            onPause={pause}
           >
             {video.title}
           </PlayButton>
